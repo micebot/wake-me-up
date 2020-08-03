@@ -1,4 +1,4 @@
-# WakeMeUp 🧀
+# WakeMeUp 🧀 [![pipeline status](https://gitlab.com/micebot/wake-me-up/badges/master/pipeline.svg)](https://gitlab.com/micebot/wake-me-up/-/commits/master)
 
 Este projeto tem o objetivo de evitar que nosso servidor "durma" no Heroku, uma
 vez que nenhuma requisição seja realizada dentro dos 30min:
