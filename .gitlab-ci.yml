@@ -7,6 +7,13 @@ variables:
   HEROKU_RUNTIME: "python-3.8.3"
 
 
+cache:
+  key: "$CI_COMMIT_SHA"
+  paths:
+    - runtime.txt
+    - requirements.txt
+
+
 # Templates ----------
 
 
