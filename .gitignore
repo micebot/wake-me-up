@@ -1,0 +1,9 @@
+# Environment
+.venv
+
+# Python
+__pycache__
+*.pyc
+
+# IDEs / Editors
+.idea

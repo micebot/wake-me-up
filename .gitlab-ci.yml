@@ -1,0 +1,55 @@
+stages:
+  - prepare
+  - deploy
+
+
+variables:
+  HEROKU_RUNTIME: "python-3.8.3"
+
+
+# Templates ----------
+
+
+.python: &py
+  image: python:3.8
+  before_script:
+    - pip install poetry
+    - poetry --version
+    - poetry config cache-dir .cache/poetry
+    - poetry config virtualenvs.in-project true
+    - poetry install
+
+
+.deploy-template: &deploy
+  stage: deploy
+  image: ruby:2.7
+
+  dependencies:
+    - setup
+
+  before_script:
+    - gem install dpl
+
+
+# Prepare Jobs ----------
+
+
+setup:
+  stage: prepare
+  <<: *py
+  script:
+    - echo "$HEROKU_RUNTIME" > runtime.txt
+    - poetry export -f requirements.txt > requirements.txt
+
+
+# Deploy Jobs
+
+
+production:
+  <<: *deploy
+  script:
+    - dpl --provider=heroku --app=$HEROKU_WAKE_ME_APP --api-key=$HEROKU_WAKEMEUP_KEY --skip-cleanup=true
+
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "master"'
+      when: on_success
